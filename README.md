@@ -1,10 +1,10 @@
-# react-predefined-color-picker
+# react-iconify-list
 
 :construction: Under development :construction:
 
 > A tiny color predefined picker component for React and Preact apps
 
-[![NPM](https://img.shields.io/npm/v/react-predefined-color-picker.svg)](https://www.npmjs.com/package/react-predefined-color-picker) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-iconify-list.svg)](https://www.npmjs.com/package/react-iconify-list) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
 ![](./images/demo.gif)
@@ -13,25 +13,13 @@
 ## Install
 
 ```bash
-npm install --save react-predefined-color-picker
+npm install --save react-iconify-list
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
-
-import ColorPredefinedPicker from 'react-predefined-color-picker'
-
-function Example() {
-  function handleColorChange(color) {
-    console.log(color)
-  }
-
-  return(
-    <ColorPredefinedPicker onChange={(color) => handleColorChange(color)} />
-  )
-}
+...
 ```
 
 

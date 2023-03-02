@@ -14,3 +14,5 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 export const Default: ComponentStory<typeof IconifyList> = () => <IconifyList onChange={(e) => console.log(e)}/>;
+export const Small: ComponentStory<typeof IconifyList> = () => <IconifyList sizeButton='22' onChange={(e) => console.log(e)}/>;
+export const Large: ComponentStory<typeof IconifyList> = () => <IconifyList sizeButton='48' onChange={(e) => console.log(e)}/>;

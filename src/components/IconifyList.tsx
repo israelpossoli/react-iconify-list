@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
+import { Icon } from "@iconify/react";
 // import "../index.css"
 
 
@@ -7,138 +8,182 @@ interface PoupupProps {
     visible: boolean;
 }
 
-const DefaultColors = [
-    'blue',
-    'red',
-    'orange',
-    'green',
-    'gray',
-    'purple',
-    'pink',
-    '#2668CA',
-    'rgb(30, 40, 50)',
+const DefaultIcons = [
+    'material-symbols:account-balance',
+    'material-symbols:add-shopping-cart',
+    'material-symbols:account-tree-outline',
+    'material-symbols:account-balance-wallet-outline-rounded',
+    'material-symbols:attach-money',
+    'material-symbols:card-travel-outline',
+    'material-symbols:contactless',
+    'material-symbols:paid',
+    'material-symbols:account-balance',
+    'material-symbols:add-shopping-cart',
+    'material-symbols:account-tree-outline',
+    'material-symbols:account-balance-wallet-outline-rounded',
+    'material-symbols:attach-money',
+    'material-symbols:card-travel-outline',
+    'material-symbols:contactless',
+    'material-symbols:paid',
+    'material-symbols:account-balance',
+    'material-symbols:add-shopping-cart',
+    'material-symbols:account-tree-outline',
+    'material-symbols:account-balance-wallet-outline-rounded',
+    'material-symbols:attach-money',
+    'material-symbols:card-travel-outline',
+    'material-symbols:contactless',
+    'material-symbols:paid',
+    'material-symbols:account-balance',
+    'material-symbols:add-shopping-cart',
+    'material-symbols:account-tree-outline',
+    'material-symbols:account-balance-wallet-outline-rounded',
+    'material-symbols:attach-money',
+    'material-symbols:card-travel-outline',
+    'material-symbols:contactless',
+    'material-symbols:paid',
+    'material-symbols:account-balance',
+    'material-symbols:add-shopping-cart',
+    'material-symbols:account-tree-outline',
+    'material-symbols:account-balance-wallet-outline-rounded',
+    'material-symbols:attach-money',
+    'material-symbols:card-travel-outline',
+    'material-symbols:contactless',
+    'material-symbols:paid',
+    
 ]
 
 const Container = styled.div`
     position: relative;
     display: inline-block;
-    `
+`
 
 const Button = styled.div`
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
     cursor: pointer;
 `
 
-const Poupup = styled.div<PoupupProps>`
-    visibility: ${props => props.visible ? "visible" : "hidden"};
-    background-color: #fff;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 0.2s;
-    position: absolute;
+const DialogModal = styled.div<PoupupProps>`
+    display: ${props => props.visible ? "block" : "none"};
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 0px;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+`
+
+const DialogContent = styled.div`
+    background-color: #fefefe;
+    margin: 15% auto;
+    border: 1px solid #888;
+    min-width: 320px;
+    width: 23%;
+    height: 220px;
+    padding: 0px;
+`
+
+const DialogHeader = styled.div`
+    text-align: right;
+    height: 10px;
     padding: 4px;
-    margin-top: 1px;
-    box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
-    border: #ababab;
-    border-style: solid;
-    border-width: 1px;
+    margin: 0px;
+
+`
+
+const DialogCloseButton = styled.span`
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 0px;
+ 
+    &:hover,
+    &:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+  }
+`
+
+const DialogBody = styled.div`
+    height: calc(100% - 18px);
     overflow-y: auto;
-    overflow-x: hidden;
-    z-index: 1000;
-    tabIndex:-1
 `
 
-const PoupupTable = styled.div`
-    display: grid;
-    grid-row-gap: 0px;
-    column-gap: 0px;
-`
 
-const PoupupItem = styled.div`
-    border-radius: 50%;
-    border-width: 2px;
-    border: #fff;
-    border-style: solid;
+
+const IconItem = styled.span`
+    color: gray;
     cursor: pointer;
+    margin: 1px;
     &:hover {
-        border-width: 0px;
-      }    
+        color: blue
+    }
+
 `
+
 
 interface IconifyListProps {
-    colors?: Array<string>
-    columns?: number
-    color?: string,
-    size?: "small" | "medium" | "large"
+    provider?: string
+    sizeButton?: string
+    iconList?: string[]
+    icon?: string
     onChange: (color: string) => void;
     // setColor?: (color: string) => void;
 }
 
-function IconifyList({ colors = DefaultColors, size = "medium", columns = 3, color = DefaultColors[0], onChange}: IconifyListProps) {
+function IconifyList({ provider = "mdi", sizeButton = "28", iconList = DefaultIcons, icon = DefaultIcons[0], onChange }: IconifyListProps) {
     const [open, setOpen] = useState(false)
-    const [selectedColor, setSelectedColor] = useState(color)
-    const Colors = colors ? colors : DefaultColors
+    const [icons, setIcons] = useState(iconList)
+    const [selectedIcon, setSelectedIcon] = useState(icon)
+
 
     const handleClick = () => {
         setOpen((prev) => !open)
     }
 
-    const SelectColor = (color: string) => {
-        setSelectedColor(color)
+    const SelectIcon = (icon: string) => {
+        setSelectedIcon(icon)
         setOpen(false)
-        onChange(color)
-        // onSelectColor(color)
+        onChange(icon)
     }
 
-    const handleClose = () => {
-        setOpen(false)
-        return (selectedColor)
-    }
 
-    let sizeButton: string
-    let sizeColors: string
-    switch (size) {
-        case "small":
-            sizeButton = "18px"
-            sizeColors = "24px"
-            break;
-        case "large":
-            sizeButton = "30px"
-            sizeColors = "36px"
-            break;
 
-        case "medium":
-        default:
-            sizeButton = "24px"
-            sizeColors = "30px"
-            break;
-    }
-    const gridColumns = String((sizeColors + " ").repeat(columns))
+    // useEffect(() => {
+    // console.log(listIcons('', 'material-symbols'));
+    // }, [])
 
     return (
         <>
             <Container>
-                <Button onClick={handleClick}
-                    className="button"
-                    style={{ backgroundColor: selectedColor, width: sizeButton, height: sizeButton }}
-                />
-                <Poupup visible={open}>
-                    <PoupupTable
-                        style={{
-                            gridTemplateColumns: gridColumns,
-                            gridAutoRows: sizeColors
-                        }}
-                    >
-                        {Colors.map((c, index) => (
-                            <PoupupItem
-                                key={index}
-                                style={{ backgroundColor: c }}
-                                onClick={(e) => SelectColor(c)}
-                            />
-                        ))}                        
-                    </PoupupTable>
-                </Poupup>
+                <Button onClick={() => setOpen((prev) => !prev)}
+                    style={{ width: sizeButton, height: sizeButton }}
+                >
+                <Icon icon={selectedIcon} width={sizeButton} height={sizeButton} />
+                </Button>
+
+                <DialogModal key="teste" visible={open} onClick={(e) => { setOpen((false)) }}>
+                    <DialogContent onClick={(e) => e.stopPropagation()}>
+                        <DialogHeader>
+                            <DialogCloseButton onClick={() => setOpen((false))}>
+                                &times;
+                            </DialogCloseButton>
+                        </DialogHeader>
+
+                        <DialogBody>
+                            {icons.map((icon, index) => (
+                                <IconItem>
+                                    <Icon icon={icon} width="32" height="32" onClick={(e) => SelectIcon(icon)}/>
+                                </IconItem>
+                            ))}
+                        </DialogBody>
+                    </DialogContent>
+
+                </DialogModal>
+
             </Container>
         </>
     )
